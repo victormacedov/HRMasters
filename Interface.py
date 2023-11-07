@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import simpledialog
+from tkinter import simpledialog, messagebox
 
 class Funcionario:
     def __init__(self, idFuncionario, nome, cargo, informacoesContato, salario):
@@ -66,15 +66,15 @@ class HRMasters:
                     encontrado = True
                     break
             if not encontrado:
-                print("Esse funcionário não foi cadastrado.")
-
+                messagebox.showinfo("Funcionário não encontrado", "Esse funcionário não foi cadastrado.")
             opcao = simpledialog.askstring("Excluir Funcionário", "Deseja excluir mais algum funcionário? (S/N)")
             if opcao.lower() != "s":
                 break
 
     def modificarFuncionarios(self):
         while True:
-            id_funcionario = simpledialog.askinteger("Modificar Funcionário", "Digite o ID do funcionário que deseja modificar:")
+            id_funcionario = simpledialog.askinteger("Modificar Funcionário",
+                                                     "Digite o ID do funcionário que deseja modificar:")
             encontrado = False
             for funcionario in self.listaFuncionarios:
                 if id_funcionario == funcionario.idFuncionario:
@@ -92,19 +92,22 @@ class HRMasters:
                     encontrado = True
                     break
             if not encontrado:
-                print("Funcionário não cadastrado.")
-            select = simpledialog.askstring("Modificar Funcionário", "Deseja modificar mais algum funcionário? (S/N)").lower()
+                messagebox.showinfo("Funcionário não encontrado", "Esse funcionário não foi cadastrado.")
+                break
+            select = simpledialog.askstring("Modificar Funcionário",
+                                            "Deseja modificar mais algum funcionário? (S/N)").lower()
             if select == "n":
                 break
+
 
 class InterfaceGrafica:
     def __init__(self, master):
         self.master = master
-        self.master.title("HRMasters")
+        self.master.title("HRMasters Interface")
         self.screen_width = self.master.winfo_screenwidth()
         self.screen_height = self.master.winfo_screenheight()
-        self.window_width = 500
-        self.window_height = 300
+        self.window_width = 600
+        self.window_height = 400
         self.x_coordinate = (self.screen_width / 2) - (self.window_width / 2)
         self.y_coordinate = (self.screen_height / 2) - (self.window_height / 2)
         self.master.geometry(f"{self.window_width}x{self.window_height}+{int(self.x_coordinate)}+{int(self.y_coordinate)}")
