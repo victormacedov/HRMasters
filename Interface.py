@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import simpledialog, messagebox
 
+
 class Funcionario:
     def __init__(self, idFuncionario, nome, cargo, informacoesContato, salario):
         self.idFuncionario = idFuncionario
@@ -12,6 +13,7 @@ class Funcionario:
     def obterDetalhes(self):
         return f"\nID: {self.idFuncionario}\nNome: {self.nome}\nCargo: {self.cargo}\nContato: {self.informacoesContato}\nSalário: {self.salario}\n"
 
+
 class HRMasters:
     def __init__(self):
         self.listaFuncionarios = []
@@ -22,7 +24,12 @@ class HRMasters:
             self.contador_id += 1
             print(f"\nID: {self.contador_id}")
             nome = simpledialog.askstring("Cadastro de Funcionário", "Digite o nome do funcionário:")
-            cargo = simpledialog.askstring("Cadastro de Funcionário", "Digite o cargo do funcionário (A, B, C):").upper()
+            while True:
+                cargo = simpledialog.askstring("Cadastro de Funcionário", "Digite o cargo do funcionário (A, B, C):").upper()
+                if cargo in ["A", "B", "C"]:
+                    break
+                else:
+                    messagebox.showinfo("Cargo inválido", "O cargo inserido não é válido. Por favor, insira um cargo válido.")
             if cargo == "A":
                 salario = 2500
             elif cargo == "B":
@@ -79,17 +86,24 @@ class HRMasters:
             for funcionario in self.listaFuncionarios:
                 if id_funcionario == funcionario.idFuncionario:
                     print("Funcionário cadastrado.")
-                    novoCargo = simpledialog.askstring("Modificar Funcionário", "Digite o novo cargo:").upper()
-                    if novoCargo == "A":
-                        funcionario.cargo = 'A'
-                        funcionario.salario = 2500
-                    elif novoCargo == "B":
-                        funcionario.cargo = 'B'
-                        funcionario.salario = 5000
-                    elif novoCargo == "C":
-                        funcionario.cargo = 'C'
-                        funcionario.salario = 6500
-                    encontrado = True
+                    while True:
+                        novoCargo = simpledialog.askstring("Modificar Funcionário", "Digite o novo cargo:").upper()
+                        if novoCargo in ["A", "B", "C"]:
+                            if novoCargo == "A":
+                                funcionario.cargo = 'A'
+                                funcionario.salario = 2500
+                            elif novoCargo == "B":
+                                funcionario.cargo = 'B'
+                                funcionario.salario = 5000
+                            elif novoCargo == "C":
+                                funcionario.cargo = 'C'
+                                funcionario.salario = 6500
+                            encontrado = True
+                            break
+                        else:
+                            messagebox.showinfo("Cargo inválido",
+                                                "O cargo inserido não é válido. Por favor, insira um cargo válido.")
+                            continue
                     break
             if not encontrado:
                 messagebox.showinfo("Funcionário não encontrado", "Esse funcionário não foi cadastrado.")
@@ -128,6 +142,7 @@ class InterfaceGrafica:
 
         self.modificar_button = tk.Button(self.master, text="Modificar Funcionário", command=self.hrmasters.modificarFuncionarios)
         self.modificar_button.pack(pady=10)
+
 
 if __name__ == '__main__':
     root = tk.Tk()
