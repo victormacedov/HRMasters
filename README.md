@@ -1,1 +1,1 @@
-# HRMasters
+# HRMasters - Gerenciamento de Cadastro de Funcionários
